@@ -1,4 +1,5 @@
 //your JS code here.
+
 // Array to store user's answers
 let userAnswers = new Array(questions.length).fill(null);
 
@@ -91,7 +92,6 @@ const questions = [
     answer: "Ottawa",
   },
 ];
-
 
 // Do not change code below this line
 // This code will just display the questions to the screen
