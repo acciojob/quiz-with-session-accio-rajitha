@@ -1,4 +1,3 @@
-//your JS code here.
 const questions = [
     {
         question: "What is the capital of France?",
@@ -28,13 +27,13 @@ const questions = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
-    const quizContainer = document.getElementById("quiz");
+    const questionsContainer = document.getElementById("questions");
     const submitButton = document.getElementById("submit");
     const scoreDisplay = document.getElementById("score");
 
     function loadQuiz() {
         let progress = JSON.parse(sessionStorage.getItem("progress")) || [];
-        quizContainer.innerHTML = "";
+        questionsContainer.innerHTML = "";
         questions.forEach((q, index) => {
             let questionElem = document.createElement("div");
             questionElem.classList.add("question");
@@ -63,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             questionElem.appendChild(optionsList);
-            quizContainer.appendChild(questionElem);
+            questionsContainer.appendChild(questionElem);
         });
     }
 
@@ -92,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadQuiz();
 
-    quizContainer.addEventListener("change", saveProgress);
+    questionsContainer.addEventListener("change", saveProgress);
 
     submitButton.addEventListener("click", () => {
         let score = calculateScore();
