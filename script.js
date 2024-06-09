@@ -1,0 +1,102 @@
+// Define the questions and answers
+
+const questions = [
+    {
+        question: "What is the capital of France?",
+        options: ["Paris", "London", "Berlin", "Madrid"],
+        correct: 0
+    },
+    {
+        question: "What is 2 + 2?",
+        options: ["3", "4", "5", "6"],
+        correct: 1
+    },
+    {
+        question: "What is the capital of Spain?",
+        options: ["Madrid", "Lisbon", "Rome", "Paris"],
+        correct: 0
+    },
+    {
+        question: "What is the capital of Italy?",
+        options: ["Rome", "Venice", "Florence", "Milan"],
+        correct: 0
+    },
+    {
+        question: "What is the capital of Germany?",
+        options: ["Berlin", "Munich", "Frankfurt", "Hamburg"],
+        correct: 0
+    }
+];
+
+
+function loadQuiz() {
+    const quizForm = document.getElementById('quiz-form');
+    quizForm.innerHTML = ''; // Clear any existing content
+    const savedProgress = JSON.parse(sessionStorage.getItem('progress')) || [];
+
+    questions.forEach((question, questionIndex) => {
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('question');
+        questionElement.innerHTML = `
+            <h3>${questionIndex + 1}. ${question.question}</h3>
+            <div class="options">
+                ${question.options.map((option, index) => `
+                    <label>
+                        <input type="radio" name="question${questionIndex}" value="${index}" ${savedProgress[questionIndex] == index ? 'checked' : ''}>
+                        ${option}
+                    </label>
+                `).join('')}
+            </div>
+        `;
+        quizForm.appendChild(questionElement);
+    });
+}
+
+
+function saveProgress() {
+    const progress = [];
+    questions.forEach((question, questionIndex) => {
+        const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
+        if (selectedOption) {
+            progress[questionIndex] = parseInt(selectedOption.value);
+        }
+    });
+    sessionStorage.setItem('progress', JSON.stringify(progress));
+}
+
+
+function calculateScore() {
+    let score = 0;
+    const progress = JSON.parse(sessionStorage.getItem('progress')) || [];
+    progress.forEach((selectedOption, questionIndex) => {
+        if (selectedOption === questions[questionIndex].correct) {
+            score++;
+        }
+    });
+    return score;
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const submitButton = document.getElementById('submit-btn');
+    const scoreDisplay = document.getElementById('score-display');
+
+   
+    loadQuiz();
+
+    
+    document.getElementById('quiz-form').addEventListener('change', saveProgress);
+
+
+    submitButton.addEventListener('click', () => {
+        const score = calculateScore();
+        localStorage.setItem('score', score);
+        scoreDisplay.innerText = `Your score is ${score} out of 5.`;
+    });
+
+    
+    const storedScore = localStorage.getItem('score');
+    if (storedScore !== null) {
+        scoreDisplay.innerText = `Your score is ${storedScore} out of 5.`;
+    }
+});
