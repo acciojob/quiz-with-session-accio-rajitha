@@ -1,8 +1,8 @@
 // Define the questions and answers
-// Define the baseUrl
-const baseUrl = "http://localhost:3000"; // Adjust the base URL as needed
+// 
+const baseUrl = "http://localhost:3000"; 
 
-// Define the questions and answers
+
 const questions = [
     {
         question: "What is the capital of France?",
@@ -34,7 +34,7 @@ const questions = [
 // Function to load the quiz
 function loadQuiz() {
     const quizForm = document.getElementById('quiz-form');
-    quizForm.innerHTML = ''; // Clear any existing content
+    quizForm.innerHTML = ''; 
     const savedProgress = JSON.parse(sessionStorage.getItem('progress')) || [];
 
     questions.forEach((question, questionIndex) => {
@@ -55,7 +55,7 @@ function loadQuiz() {
     });
 }
 
-// Function to save progress
+
 function saveProgress() {
     const progress = [];
     questions.forEach((question, questionIndex) => {
@@ -100,19 +100,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Cypress commands (for testing purposes)
+
 if (typeof cy !== 'undefined') {
     describe("Quiz Application", () => {
         it("Should display quiz questions and check functionality", () => {
             cy.visit(baseUrl + "/main.html");
 
-            // Wait for the quiz questions to be loaded
-            cy.wait(1000); // Adjust the wait time as needed
+            
+            cy.wait(1000); 
 
-            // Check if questions are loaded
+           
             cy.get("form#quiz-form").children("div").should("have.length", 5);
 
-            // Check each question and its options
+            
             cy.get("form#quiz-form > div").each(($ele, index) => {
                 expect($ele.text().split("?")[0] + "?").to.equal(questions[index].question);
                 cy.wrap($ele).within(() => {
@@ -122,10 +122,10 @@ if (typeof cy !== 'undefined') {
                 });
             });
 
-            // Check if submit button exists
+            
             cy.get("button#submit-btn");
 
-            // Check if score display is empty
+            
             cy.get("p#score-display").should("be.empty");
         });
     });
