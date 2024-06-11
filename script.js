@@ -1,5 +1,5 @@
 // Define the questions and answers
-// Define the questions and answers
+
 const questions = [
     {
         question: "What is the capital of France?",
@@ -28,10 +28,10 @@ const questions = [
     }
 ];
 
-// Function to load the quiz
+
 function loadQuiz() {
     const quizForm = document.getElementById('quiz-form');
-    quizForm.innerHTML = ''; // Clear any existing content
+    quizForm.innerHTML = ''; 
     const savedProgress = JSON.parse(sessionStorage.getItem('progress')) || [];
 
     questions.forEach((question, questionIndex) => {
@@ -52,7 +52,7 @@ function loadQuiz() {
     });
 }
 
-// Function to save progress
+
 function saveProgress() {
     const progress = [];
     questions.forEach((question, questionIndex) => {
@@ -64,7 +64,7 @@ function saveProgress() {
     sessionStorage.setItem('progress', JSON.stringify(progress));
 }
 
-// Function to calculate score
+
 function calculateScore() {
     let score = 0;
     const progress = JSON.parse(sessionStorage.getItem('progress')) || [];
@@ -76,7 +76,7 @@ function calculateScore() {
     return score;
 }
 
-// Execute actions on DOMContentLoaded
+
 document.addEventListener('DOMContentLoaded', () => {
     const submitButton = document.getElementById('submit-btn');
     const scoreDisplay = document.getElementById('score-display');
@@ -101,13 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof cy !== 'undefined') {
     describe("Quiz Application", () => {
         it("Should display quiz questions and check functionality", () => {
-            // Visit the main.html page
+           
             cy.visit("/main.html");
 
-            // Wait for the quiz questions to be loaded
-            cy.wait(1000); // Adjust the wait time as needed
+            
+            cy.wait(1000); 
 
-            // Check if questions are loaded
+            
             cy.get("form#quiz-form").children("div").should("have.length", 5);
 
             // Check each question and its options
@@ -120,10 +120,10 @@ if (typeof cy !== 'undefined') {
                 });
             });
 
-            // Check if submit button exists
+            
             cy.get("button#submit-btn");
 
-            // Check if score display is empty
+            
             cy.get("p#score-display").should("be.empty");
         });
     });
